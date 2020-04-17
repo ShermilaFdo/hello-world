@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">   
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+
+<head>
+<meta charset="ISO-8859-1">
+<title>View Drug List</title>
+</head>
+
+<script>
+$(document).ready(function () {
+	druglist();
+});
+
+function druglist() {
+	   var l = "";
+	        setTimeout(function(){        
+	        $.ajax({
+	            url: 'http://localhost:8090/com.PharmacyService/PharmacyService/Pharmacy',
+	            contentType: "application/json",
+	            type: 'get',
+	            dataType: 'json',
+	            timeout: 30000,
+	            success: function(data) {
+	             console.log(data)
+	              $('#tab').dataTable( {
+	        "aaData": data.List,
+         "bDestroy": true,
+	        "columns": [
+	            { "data": "drugID" },
+	            { "data": "drugName" },
+	            { "data": "quantity" },
+	            { "data": "strength" },
+	            { "data": "ExpireDate" },
+	            { "data": "UnitPrice" },
+	            { "data": "typeName" },
+	            { "data": "categoryName" }
+	        ]
+	    })
+	            },
+	        });
+	    },30);
+	}
+</script>
+
+
+<body>
+
+<table id ="tab" style="width:100%">
+ <thead>
+    <tr>
+      <th>drugID</th>
+      <th>drugName</th>
+      <th>quantity</th>
+      <th>strength</th>
+      <th>ExpireDate</th>
+      <th>UnitPrice</th>
+      <th>typeName</th>
+      <th>categoryName</th>
+
+    </tr>
+  </thead>
+ 	<tbody></tbody>
+</table>
+
+</body>
+</html>
